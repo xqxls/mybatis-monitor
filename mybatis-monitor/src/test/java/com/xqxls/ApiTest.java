@@ -26,8 +26,6 @@ public class ApiTest {
 
     @Test
     public void test(){
-//        List<User> userList = userDao.findAll();
-//        log.info("测试结果：{}", JSON.toJSON(userList));
 
         User user = userDao.queryUserInfoById(4L);
         log.info("测试结果：{}", JSON.toJSON(user));
@@ -36,8 +34,8 @@ public class ApiTest {
     @Test
     public void test_insert(){
         User user = new User();
-        user.setUserId("126");
-        user.setUserName("小兵");
+        user.setUserId("127");
+        user.setUserName("小兵1");
         userDao.insert(user);
         log.info("测试结果：{}", JSON.toJSON(user));
     }
@@ -46,7 +44,7 @@ public class ApiTest {
     public void test_update(){
         User user = new User();
         user.setId(4L);
-        user.setUserId("125");
+        user.setUserId("126");
         user.setUserName("小Q");
         userDao.update(user);
         log.info("测试结果：{}", JSON.toJSON(user));
