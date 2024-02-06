@@ -1,0 +1,23 @@
+spring:
+  config:
+    name: mybatis-monitor
+  datasource:
+    username: root
+    password: 429006huzhuo
+    url: jdbc:mysql://127.0.0.1:3306/mybatis?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  config-location:  classpath:/config/mybatis-config.xml
+
+# 日志
+logging:
+  level:
+    root: info
+    com:
+      xqxls: debug
