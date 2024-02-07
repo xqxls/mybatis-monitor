@@ -35,6 +35,8 @@ public class LogInfo {
     private String parameter;
     // 返回值
     private String returnValue;
+    // 返回值
+    private Long spendTime;
     // 创建时间
     private LocalDateTime createTime;
     // 更新时间

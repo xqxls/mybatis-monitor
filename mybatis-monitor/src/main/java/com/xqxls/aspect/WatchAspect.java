@@ -1,8 +1,10 @@
 package com.xqxls.aspect;
 
 import com.alibaba.fastjson2.JSON;
+import com.google.common.eventbus.AsyncEventBus;
 import com.xqxls.annotation.Watch;
 import com.xqxls.dao.ILogInfoDao;
+import com.xqxls.event.Message;
 import com.xqxls.po.LogInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -11,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -36,11 +39,22 @@ public class WatchAspect {
     private SqlSessionFactory sqlSessionFactory;
 
     @Resource
-    private ILogInfoDao logInfoDao;
+    private AsyncEventBus eventBus;
+
+    private final static ThreadLocal<Long> startTime = new ThreadLocal<>();
+
 
     /** 注解切面 **/
     @Pointcut("@annotation(com.xqxls.annotation.Watch)")
     public void pointCut(){}
+
+//    @Pointcut("execution(public * com.xqxls.dao..*.*(..))")
+//    public void pointCut(){}
+
+    @Before(value = "pointCut()")
+    public void doBefore(JoinPoint joinPoint) throws Throwable{
+        startTime.set(System.currentTimeMillis());
+    }
 
     /**
      * 拦截dao方法，记录操作数据
@@ -53,6 +67,10 @@ public class WatchAspect {
         // 获取该方法上的 @Watch注解
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
         Method method = methodSignature.getMethod();
+        Class<?> clazz = method.getDeclaringClass();
+        if(clazz.equals(ILogInfoDao.class)){
+            return;
+        }
         Watch watch = (Watch) Arrays.stream(method.getDeclaredAnnotations())
                 .filter(a -> a instanceof Watch)
                 .findFirst()
@@ -60,6 +78,11 @@ public class WatchAspect {
         if(watch == null){
             return;
         }
+
+        long spendTime = System.currentTimeMillis() - startTime.get();
+        log.info("spendTime is " + spendTime);
+        startTime.remove();
+
         //类路径
         String namespace = method.getDeclaringClass().getName();
         //方法名
@@ -82,12 +105,14 @@ public class WatchAspect {
                 .executeSql(sql)
                 .parameter(!parameterMap.isEmpty()?JSON.toJSONString(parameterMap):null)
                 .returnValue(returnValue!=null?JSON.toJSONString(returnValue):null)
+                .spendTime(spendTime)
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .isDeleted(false)
                 .build();
         log.info("logInfo is " + JSON.toJSON(logInfo));
-        logInfoDao.insert(logInfo);
-
+        Message message = new Message(logInfo);
+        log.info("发送消息，message：{}", JSON.toJSON(message));
+        eventBus.post(message);
     }
 }

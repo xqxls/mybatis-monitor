@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xqxls.dao.ILogInfoDao">
+
+    <resultMap id="logInfoMap" type="com.xqxls.po.LogInfo">
+        <id column="id" property="id"/>
+        <result column="method_name" property="methodName"/>
+        <result column="type" property="type"/>
+        <result column="execute_sql" property="executeSql"/>
+        <result column="parameter" property="parameter"/>
+        <result column="return_value" property="returnValue"/>
+        <result column="spend_time" property="spendTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.xqxls.po.LogInfo">
+        insert into log_info(method_name, type, execute_sql, parameter, return_value, spend_time, create_time ,update_time , is_deleted)
+        values(#{methodName}, #{type}, #{executeSql}, #{parameter}, #{returnValue}, #{spendTime}, now(), now(), 0)
+    </insert>
+
+</mapper>

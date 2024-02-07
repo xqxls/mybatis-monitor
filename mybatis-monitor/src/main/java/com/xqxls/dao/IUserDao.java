@@ -19,7 +19,7 @@ public interface IUserDao {
     @Watch(operation = Operation.SELECT,remark = "根据主键ID查询用户")
     User queryUserInfoById(@Param("id") Long id);
 
-    @Watch(operation = Operation.SELECT,remark = "查询所有用户")
+//    @Watch(operation = Operation.SELECT,remark = "查询所有用户")
     List<User> findAll();
 
     @Watch(operation = Operation.INSERT,remark = "新增用户")
