@@ -4,6 +4,7 @@
 
     <resultMap id="logInfoMap" type="com.xqxls.po.LogInfo">
         <id column="id" property="id"/>
+        <result column="namespace" property="namespace"/>
         <result column="method_name" property="methodName"/>
         <result column="type" property="type"/>
         <result column="execute_sql" property="executeSql"/>
@@ -16,8 +17,8 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.xqxls.po.LogInfo">
-        insert into log_info(method_name, type, execute_sql, parameter, return_value, spend_time, create_time ,update_time , is_deleted)
-        values(#{methodName}, #{type}, #{executeSql}, #{parameter}, #{returnValue}, #{spendTime}, now(), now(), 0)
+        insert into log_info(namespace, method_name, type, execute_sql, parameter, return_value, spend_time, create_time ,update_time , is_deleted)
+        values(#{namespace}, #{methodName}, #{type}, #{executeSql}, #{parameter}, #{returnValue}, #{spendTime}, now(), now(), 0)
     </insert>
 
 </mapper>

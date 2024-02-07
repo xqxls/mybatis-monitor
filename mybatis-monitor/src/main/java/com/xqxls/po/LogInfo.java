@@ -25,6 +25,8 @@ public class LogInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // 接口路径
+    private String namespace;
     // 方法名
     private String methodName;
     // 操作类型

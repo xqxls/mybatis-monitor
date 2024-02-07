@@ -25,9 +25,6 @@ public class ApiTest {
     @Resource
     private IUserDao userDao;
 
-    @Resource
-    private ILogInfoDao logInfoDao;
-
     @Test
     public void test(){
         User user = userDao.queryUserInfoById(4L);

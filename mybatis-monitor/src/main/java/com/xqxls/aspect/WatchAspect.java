@@ -100,6 +100,7 @@ public class WatchAspect {
         }
 
         LogInfo logInfo = LogInfo.builder()
+                .namespace(namespace)
                 .methodName(methodName)
                 .type(watch.operation().getDesc())
                 .executeSql(sql)
