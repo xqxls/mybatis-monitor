@@ -41,7 +41,6 @@ public class SqlUtil {
         }
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
         sql = beautifySql(sql);
-        // 参考mybatis 源码 DefaultParameterHandler
         if (parameterMappings != null) {
             for (ParameterMapping parameterMapping : parameterMappings) {
                 if (parameterMapping.getMode() != ParameterMode.OUT) {
