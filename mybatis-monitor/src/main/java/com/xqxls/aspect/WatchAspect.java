@@ -167,7 +167,7 @@ public class WatchAspect {
     /**
      * 获取利用反射获取类里面的值和名称
      * @param obj 待处理对象
-     * @return 参数集合
+     * @return 对象转换之后的集合
      */
     private static Map<String, Object> objectToMap(Object obj) throws IllegalAccessException {
         Map<String, Object> map = new HashMap<>();
