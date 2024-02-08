@@ -1,7 +1,6 @@
 package com.xqxls;
 
 import com.alibaba.fastjson2.JSON;
-import com.xqxls.dao.ILogInfoDao;
 import com.xqxls.dao.IUserDao;
 import com.xqxls.po.User;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +33,8 @@ public class ApiTest {
     @Test
     public void test_insert(){
         User user = new User();
-        user.setUserId("127");
-        user.setUserName("小兵1");
+        user.setUserId("113");
+        user.setUserName("小兵3");
         userDao.insert(user);
         log.info("测试结果：{}", JSON.toJSON(user));
     }
@@ -43,9 +42,9 @@ public class ApiTest {
     @Test
     public void test_update(){
         User user = new User();
-        user.setId(20L);
-        user.setUserId("126");
-        user.setUserName("小Q");
+        user.setId(4L);
+        user.setUserId("127");
+        user.setUserName("小小Q");
         userDao.update(user);
         log.info("测试结果：{}", JSON.toJSON(user));
     }

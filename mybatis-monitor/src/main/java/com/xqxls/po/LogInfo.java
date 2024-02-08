@@ -33,6 +33,8 @@ public class LogInfo {
     private String type;
     // 执行的sql
     private String executeSql;
+    // 最终sql
+    private String finalSql;
     // 入参
     private String parameter;
     // 返回值

@@ -11,7 +11,8 @@ public enum Operation {
     INSERT(1, "新增"),
     UPDATE(2, "编辑"),
     DELETE(3, "删除"),
-    SELECT(4, "查询");
+    SELECT(4, "查询"),
+    UNKNOWN(-1, "未知类型");
 
     private Integer code;
     private String desc;
